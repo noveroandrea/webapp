@@ -1,0 +1,14 @@
+name: opinions_client
+description: A simple Flutter client for Opinions API
+publish_to: 'none'
+version: 0.1.0
+environment:
+  sdk: '>=2.18.0 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^0.13.0
+
+flutter:
+  uses-material-design: true
