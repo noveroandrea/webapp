@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../services/api.dart';
+import '../services/api.dart'; //class Api
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -27,27 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void openAnswerDialog(int topicId) async {
-    final TextEditingController ctrl = TextEditingController();
-    final result = await showDialog<String>(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: const Text('Post an answer'),
-        content: TextField(controller: ctrl, decoration: const InputDecoration(hintText: 'Your answer')),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
-          ElevatedButton(
-              onPressed: () => Navigator.pop(context, ctrl.text),
-              child: const Text('Post')),
-        ],
-      ),
-    );
-
-    if (result != null && result.trim().isNotEmpty) {
-      await Api.postAnswer(topicId, result.trim());
-      loadTopics();
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,11 +41,25 @@ class _HomeScreenState extends State<HomeScreen> {
                 return ListTile(
                   title: Text(t['title']),
                   subtitle: Text(t['description'] ?? ''),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.reply),
-                    onPressed: () => openAnswerDialog(t['id']),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.thumb_up, color: Colors.green),
+                        onPressed: () => Api.postAnswer(t['id'], '1'),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.thumb_down, color: Colors.red),
+                        onPressed: () => Api.postAnswer(t['id'], '-1'),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.remove, color: Colors.grey),
+                        onPressed: () => Api.postAnswer(t['id'], '0'),
+                      ),
+                    ],
                   ),
                 );
+
               },
             ),
     );

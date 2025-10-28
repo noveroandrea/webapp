@@ -1,6 +1,7 @@
 import express from "express";
 import { db } from "./db.js";
 
+
 export const router = express.Router();
 
 router.get("/topics", async (req, res) => {
@@ -15,6 +16,7 @@ router.get("/topics", async (req, res) => {
 
 router.post("/vote", async (req, res) => {
   const { user_id, topic_id, vote } = req.body;
+  console.log("Received vote:", { user_id, topic_id, vote });
   try {
     await db.query(
       "INSERT INTO votes (user_id, topic_id, vote) VALUES ($1, $2, $3)",
