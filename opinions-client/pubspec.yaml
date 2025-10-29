@@ -9,6 +9,7 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^0.13.0
+  flutter_secure_storage: ^8.0.0
 
 flutter:
   uses-material-design: true
